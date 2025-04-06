@@ -1,3 +1,19 @@
 
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+R
+"contracts/maintenance-history.clar,f/2/f202e7d0a1d80ab61129fa35687cf38dcd39f108
+Q
+!tests/maintenance-history.test.ts,c/a/ca6f9427a7780222d69f7765b2c57b10ac074c3e
+W
+'tests/manufacturer-verification.test.ts,5/d/5df2106a003d5447a074c976bfad87ab0d847d5f
+X
+(contracts/manufacturer-verification.clar,a/a/aaa37ef1a91d7549f1f14a5f500859008e69300e
+O
+tests/operator-training.test.ts,a/c/acd82cf0d16f8be610a21081e1a92d80490b15f8
+P
+ contracts/operator-training.clar,d/2/d2fa471bec2af338ef54b0275a87706a53196ec6
+S
+#tests/testing-certification.test.ts,1/1/11da9ba5cfb6ef41247456b00747531c065ceada
+T
+$contracts/testing-certification.clar,1/9/19fe7e76c4295cee8531d4864e0373874cb57439
