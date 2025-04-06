@@ -1,30 +1,30 @@
+;; Manufacturer Verification Contract
+;; Validates legitimate equipment producers
 
-;; title: manufacturer-verification
-;; version:
-;; summary:
-;; description:
+(define-data-var admin principal tx-sender)
 
-;; traits
-;;
+;; Map of verified manufacturers
+(define-map verified-manufacturers principal bool)
 
-;; token definitions
-;;
+;; Add a new manufacturer
+(define-public (add-manufacturer (manufacturer principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get admin)) (err u100))
+    (ok (map-set verified-manufacturers manufacturer true))))
 
-;; constants
-;;
+;; Remove a manufacturer
+(define-public (remove-manufacturer (manufacturer principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get admin)) (err u100))
+    (ok (map-delete verified-manufacturers manufacturer))))
 
-;; data vars
-;;
+;; Check if a manufacturer is verified
+(define-read-only (is-verified-manufacturer (manufacturer principal))
+  (default-to false (map-get? verified-manufacturers manufacturer)))
 
-;; data maps
-;;
-
-;; public functions
-;;
-
-;; read only functions
-;;
-
-;; private functions
-;;
+;; Transfer admin rights
+(define-public (transfer-admin (new-admin principal))
+  (begin
+    (asserts! (is-eq tx-sender (var-get admin)) (err u100))
+    (ok (var-set admin new-admin))))
 
