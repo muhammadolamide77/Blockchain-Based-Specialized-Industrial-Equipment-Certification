@@ -9,3 +9,7 @@ W
 'tests/manufacturer-verification.test.ts,5/d/5df2106a003d5447a074c976bfad87ab0d847d5f
 X
 (contracts/manufacturer-verification.clar,a/a/aaa37ef1a91d7549f1f14a5f500859008e69300e
+O
+tests/operator-training.test.ts,a/c/acd82cf0d16f8be610a21081e1a92d80490b15f8
+P
+ contracts/operator-training.clar,d/2/d2fa471bec2af338ef54b0275a87706a53196ec6
