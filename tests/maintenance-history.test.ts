@@ -2,70 +2,68 @@ import { describe, it, expect, beforeEach } from "vitest"
 
 // Mock implementation for testing Clarity contracts
 const mockBlockchain = {
-  currentSender: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM', // Maintenance technician
+  currentSender: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", // Maintenance technician
   blockHeight: 100,
-  contracts: {  // Maintenance technician
-    blockHeight: 100,
-    contracts: {
-      'maintenance-history': {
-        admin: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
-        maintenanceRecords: new Map(),
-        recordCounter: 0
-      }
+  contracts: {
+    "maintenance-history": {
+      admin: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+      maintenanceRecords: new Map(),
+      recordCounter: 0,
     },
-    setSender(address) {
-      this.currentSender = address;
-    },
-    setBlockHeight(height) {
-      this.blockHeight = height;
-    },
-    callContract(contract, method, args) {
-      const contractState = this.contracts[contract];
+  },
+  setSender(address) {
+    this.currentSender = address
+  },
+  setBlockHeight(height) {
+    this.blockHeight = height
+  },
+  callContract(contract, method, args) {
+    const contractState = this.contracts[contract]
+    
+    if (method === "add-maintenance-record") {
+      const [equipmentId, maintenanceType, description, nextMaintenanceDue] = args
       
-      if (method === 'add-maintenance-record') {
-        const [equipmentId, maintenanceType, description, nextMaintenanceDue] = args;
-        
-        const newId = contractState.recordCounter + 1;
-        contractState.recordCounter = newId;
-        
-        const key = `${equipmentId}-${newId}`;
-        contractState.maintenanceRecords.set(key, {
-          performedBy: this.currentSender,
-          maintenanceDate: this.blockHeight,
-          maintenanceType,
-          description,
-          nextMaintenanceDue
-        });
-        
-        return { success: true };
+      const newId = contractState.recordCounter + 1
+      contractState.recordCounter = newId
+      
+      const key = `${equipmentId}-${newId}`
+      contractState.maintenanceRecords.set(key, {
+        performedBy: this.currentSender,
+        maintenanceDate: this.blockHeight,
+        maintenanceType,
+        description,
+        nextMaintenanceDue,
+      })
+      
+      return { success: true }
+    }
+    
+    if (method === "get-maintenance-record") {
+      const [equipmentId, recordId] = args
+      const key = `${equipmentId}-${recordId}`
+      
+      return contractState.maintenanceRecords.get(key) || null
+    }
+    
+    if (method === "is-maintenance-due") {
+      const [equipmentId, recordId] = args
+      const key = `${equipmentId}-${recordId}`
+      
+      const record = contractState.maintenanceRecords.get(key)
+      if (!record) {
+        return false
       }
       
-      if (method === 'get-maintenance-record') {
-        const [equipmentId, recordId] = args;
-        const key = `${equipmentId}-${recordId}`;
-        
-        return contractState.maintenanceRecords.get(key) || null;
-      }
-      
-      if (method === 'is-maintenance-due') {
-        const [equipmentId, recordId] = args;
-        const key = `${equipmentId}-${recordId}`;
-        
-        const record = contractState.maintenanceRecords.get(key);
-        if (!record) {
-          return false;
-        }
-        
-        return this.blockHeight >= record.nextMaintenanceDue;
-      }
-      
-      if (method === 'get-record-counter') {
-        return contractState.recordCounter;
-      }
-      
-      return { error: 'Method not found' };
-    }\
-};
+      return this.blockHeight >= record.nextMaintenanceDue
+    }
+    
+    if (method === "get-record-counter") {
+      return contractState.recordCounter
+    }
+    
+    return { error: "Method not found" }
+  },
+}
 
 describe("Maintenance History Contract", () => {
   beforeEach(() => {

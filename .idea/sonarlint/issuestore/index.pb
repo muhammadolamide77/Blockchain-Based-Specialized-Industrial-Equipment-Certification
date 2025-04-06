@@ -13,3 +13,7 @@ O
 tests/operator-training.test.ts,a/c/acd82cf0d16f8be610a21081e1a92d80490b15f8
 P
  contracts/operator-training.clar,d/2/d2fa471bec2af338ef54b0275a87706a53196ec6
+S
+#tests/testing-certification.test.ts,1/1/11da9ba5cfb6ef41247456b00747531c065ceada
+T
+$contracts/testing-certification.clar,1/9/19fe7e76c4295cee8531d4864e0373874cb57439
